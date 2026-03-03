@@ -1,102 +1,102 @@
+
+/**
+ * UC7 – Store Character Pattern in a Class
+ * Refactored to use CharacterPattern class
+ * for better encapsulation and scalability.
+ *
+ * @author YourName
+ * @version 7.0
+ */
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class OopsBannerApp {
 
-    public static void main(String[] args) {
-        String[] bannerLines = {
-                String.join("", getOLine1(), "  ", getOLine1(), "  ", getPLine1(), "  ", getSLine1()),
-                String.join("", getOLine2(), "  ", getOLine2(), "  ", getPLine2(), "  ", getSLine2()),
-                String.join("", getOLine3(), "  ", getOLine3(), "  ", getPLine3(), "  ", getSLine3()),
-                String.join("", getOLine4(), "  ", getOLine4(), "  ", getPLine4(), "  ", getSLine4()),
-                String.join("", getOLine5(), "  ", getOLine5(), "  ", getPLine5(), "  ", getSLine5()),
-                String.join("", getOLine6(), "  ", getOLine6(), "  ", getPLine6(), "  ", getSLine6()),
-                String.join("", getOLine7(), "  ", getOLine7(), "  ", getPLine7(), "  ", getSLine7())
-        };
+    // Static Inner Class
+    static class CharacterPattern {
 
-        for (String line : bannerLines) {
-            System.out.println(line);
+        private char character;
+        private String[] pattern;
+
+        public CharacterPattern(char character, String[] pattern) {
+            this.character = character;
+            this.pattern = pattern;
+        }
+
+        public char getCharacter() {
+            return character;
+        }
+
+        public String[] getPattern() {
+            return pattern;
         }
     }
 
-    public static String getOLine1() {
-        return "  *****  ";
+    public static void main(String[] args) {
+
+        Map<Character, CharacterPattern> patternMap = initializePatterns();
+
+        printBanner("OOPS", patternMap);
     }
 
-    public static String getOLine2() {
-        return "*       *";
+    // Initialize character patterns
+    public static Map<Character, CharacterPattern> initializePatterns() {
+
+        Map<Character, CharacterPattern> map = new HashMap<>();
+
+        map.put('O', new CharacterPattern('O', new String[] {
+                "  *****  ",
+                " *     * ",
+                " *     * ",
+                " *     * ",
+                " *     * ",
+                " *     * ",
+                "  *****  "
+        }));
+
+        map.put('P', new CharacterPattern('P', new String[] {
+                " ******* ",
+                " *     * ",
+                " *     * ",
+                " ******* ",
+                " *       ",
+                " *       ",
+                " *       "
+        }));
+
+        map.put('S', new CharacterPattern('S', new String[] {
+                " ******* ",
+                " *       ",
+                " *       ",
+                " ******* ",
+                "       * ",
+                "       * ",
+                " ******* "
+        }));
+
+        return map;
     }
 
-    public static String getOLine3() {
-        return "*       *";
-    }
+    // Print banner dynamically
+    public static void printBanner(String text, Map<Character, CharacterPattern> map) {
 
-    public static String getOLine4() {
-        return "*       *";
-    }
+        int height = 7;
 
-    public static String getOLine5() {
-        return "*       *";
-    }
+        for (int row = 0; row < height; row++) {
 
-    public static String getOLine6() {
-        return "*       *";
-    }
+            StringBuilder lineBuilder = new StringBuilder();
 
-    public static String getOLine7() {
-        return "  *****  ";
-    }
+            for (char ch : text.toCharArray()) {
 
-    public static String getPLine1() {
-        return "******* ";
-    }
+                CharacterPattern cp = map.get(ch);
 
-    public static String getPLine2() {
-        return "*      *";
-    }
+                if (cp != null) {
+                    lineBuilder.append(cp.getPattern()[row]).append("   ");
+                }
+            }
 
-    public static String getPLine3() {
-        return "*      *";
-    }
-
-    public static String getPLine4() {
-        return "******* ";
-    }
-
-    public static String getPLine5() {
-        return "*      ";
-    }
-
-    public static String getPLine6() {
-        return "*      ";
-    }
-
-    public static String getPLine7() {
-        return "*      ";
-    }
-
-    public static String getSLine1() {
-        return "******* ";
-    }
-
-    public static String getSLine2() {
-        return "*      ";
-    }
-
-    public static String getSLine3() {
-        return "*      ";
-    }
-
-    public static String getSLine4() {
-        return "******* ";
-    }
-
-    public static String getSLine5() {
-        return "       *";
-    }
-
-    public static String getSLine6() {
-        return "       *";
-    }
-
-    public static String getSLine7() {
-        return " ******* ";
+            System.out.println(lineBuilder.toString());
+        }
     }
 }
